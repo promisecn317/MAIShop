@@ -2,7 +2,6 @@ package com.maishopidea.maishopidea.entity;
 
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class User {
@@ -10,17 +9,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int userId;
-    private String userName;
-    private String userEmail;
-    private String userPassword;
+    private String username;
+    private String email;
+    private String password;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     //@Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
     private byte[] userAvatar;
     //@ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
-    @OneToMany(fetch=FetchType.LAZY,targetEntity = Product.class)
-    @JoinColumn(name = "product", columnDefinition = "longblob")
-    private List<Product> products;
+//    @OneToMany(fetch=FetchType.LAZY,targetEntity = Product.class)
+//    @JoinColumn(name = "product", columnDefinition = "longblob")
+//    private List<Product> products;
 
 
 
@@ -30,10 +29,10 @@ public class User {
 
     }
 
-    public User(String userEmail, String userPassword) {
+    public User(String userEmail, String password) {
 
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+        this.email = userEmail;
+        this.password = password;
 
     }
 
@@ -46,28 +45,28 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmail(String userEmail) {
+        this.email = userEmail;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String userPassword) {
+        this.password = userPassword;
     }
 
     public byte[] getUserAvatar() {
@@ -78,12 +77,4 @@ public class User {
         this.userAvatar = userAvatar;
     }
 
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }

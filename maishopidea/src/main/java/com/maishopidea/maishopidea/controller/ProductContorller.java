@@ -53,8 +53,6 @@ public class ProductContorller {
         }else {
             product1.setProductImage(productImage.getBytes());//.getBytes()
         }
-//        productRepo.save(product1);
-//        return product1;
         productService.saveProduct(product1);
 
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);

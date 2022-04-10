@@ -4,11 +4,12 @@ import com.maishopidea.maishopidea.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface UserServcie {
+public interface UserService {
 
 
-    public User findByUserEmail(String userEmail,String userPassword) throws Exception;
+     User findByEmail(String userEmail) throws Exception;
+     User findByPassword(String userPassword) throws Exception;
 
-    public User userLogin(String userEmail, String password);
+    //public User userLogin(String userEmail, String password);
 
 }
