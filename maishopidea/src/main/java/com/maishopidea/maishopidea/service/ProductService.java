@@ -8,11 +8,11 @@ import java.util.List;
 @Component
 public interface ProductService {
 
-    public List<Product> getSellable();
+    List<Product> getSellable();
 
-    public Product getProduct(int productId);
+    Product getProduct(int productId);
 
-    public Product saveProduct(Product product);    //product to return product information
+    Product saveProduct(Product product);    //product to return product information
 
 
 }

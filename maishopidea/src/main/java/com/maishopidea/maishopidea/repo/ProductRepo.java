@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Integer> {
 
-    public List<Product> findAllBySellable(boolean sellable);
+    List<Product> findAllBySellable(boolean sellable);
 
 }
