@@ -67,6 +67,8 @@ public class ProductContorller {
         product.setSellable(prod.isSellable());
         product.setProductDescription(prod.getProductDescription());
         product.setCreatedDate(prod.getCreatedDate());
+
+        
         if (productImage==null)product.setProductImage(null);
         else product.setProductImage(productImage.getBytes());
         productService.saveProduct(product);
