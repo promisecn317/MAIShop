@@ -73,8 +73,6 @@ public class ProductContorller {
         else product.setProductImage(productImage.getBytes());
         productService.saveProduct(product);
 
-        System.out.println("test");
-
     }
 
 
