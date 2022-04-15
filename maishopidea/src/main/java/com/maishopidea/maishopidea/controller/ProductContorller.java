@@ -58,11 +58,10 @@ public class ProductContorller {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
 
-    @PostMapping(value = "image")
-    public void getImage(@RequestPart("prod") Product prod,@RequestParam(name="productImage",required=false) MultipartFile productImage) throws IOException {
+    @PostMapping(value = "updateProductInformation")
+    public void updateProductInformation(@RequestPart("prod") Product prod, @RequestParam(name="productImage",required=false) MultipartFile productImage) throws IOException {
         Product product=new Product();
         product.setProductName(prod.getProductName());
-
         product.setProductPrice(prod.getProductPrice());
         product.setProductQty(prod.getProductQty());
         product.setSellable(prod.isSellable());
