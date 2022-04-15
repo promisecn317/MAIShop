@@ -8,6 +8,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (unique=true)
     private int productId;
 
     private String productName;
@@ -22,7 +23,9 @@ public class Product {
     //@Column(name = "productImage", columnDefinition = "longblob", nullable = true)
     private byte[] productImage;
 
+    //Constructor method for new
     public Product() {
+
     }
 
 
