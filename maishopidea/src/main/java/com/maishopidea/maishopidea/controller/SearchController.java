@@ -39,6 +39,7 @@ public class SearchController {
 
     //仅返回name   price  image
 
+    //test
 
 //    @RequestMapping("search")
 //    public String search(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
