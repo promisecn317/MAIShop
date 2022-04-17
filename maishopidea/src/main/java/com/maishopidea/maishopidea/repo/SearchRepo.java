@@ -13,6 +13,8 @@ public interface SearchRepo extends CrudRepository<Product, String> {
 
     List<Product> findAllByProductNameContaining(String productName);
 
+    List<Product> findAllByProductNameContainingAndSellableTrue(String productName);
+
 
 }
 

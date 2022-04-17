@@ -12,6 +12,6 @@ public interface SearchService {
      * @param productName productName
      * @return {@link List<Product>}
      */
-    List<Product> findAllByProductNameContaining(String productName);
-
+    List<Product> findAllProduct(String productName);
+    List<Product> searchProductSellable(String productName);
 }

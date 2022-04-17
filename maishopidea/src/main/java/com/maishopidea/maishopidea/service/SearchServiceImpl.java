@@ -14,9 +14,12 @@ public class SearchServiceImpl implements SearchService {
 @Autowired SearchRepo  searchRepo;
 
     @Override
-    public List<Product> findAllByProductNameContaining(String productName){
+    public List<Product> findAllProduct(String productName){
         return searchRepo.findAllByProductNameContaining(productName);
     }
-
+    @Override
+    public List<Product> searchProductSellable(String productName){
+        return searchRepo.findAllByProductNameContainingAndSellableTrue(productName);
+    }
 
 }
