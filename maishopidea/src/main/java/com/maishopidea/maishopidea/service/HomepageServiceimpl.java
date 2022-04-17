@@ -23,25 +23,6 @@ public class HomepageServiceimpl implements HomePageService {
     @Autowired
     private HomepageRepo homepageRepo;//service层调用dao层接口
 
-
-    @Override
-    public List<Product> getSellableProducts() {
-        return homepageRepo.findAllBySellable(true);// 如果record是可售的，返回一个true
-    }
-
-    @Override
-    public Product getProduct(int productId) {
-        Optional<Product> prod = homepageRepo.findById(productId);
-        return prod.isPresent()? prod.get():null;
-    }
-
-
-    @Override
-    public int saveProduct(Product prod) {
-
-        return homepageRepo.save(prod).getProductId();
-    }
-
     @Override
     public Page<Product> getProductPage(Integer page, Integer size) {
         log.info("page is {}, size is {}", page, size);

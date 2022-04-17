@@ -16,9 +16,5 @@ import java.util.List;
  */
 @Repository     //JpaRepository<Category,Integer>
 public interface HomepageRepo extends JpaRepository<Product,Integer> {
-    List<Product> findByProductIdAndDescriptionAndProductPriceAndProductNameAndCreateDateAndProductQty
-            (int productId, String description, double productPrice, String productName, Date createDate, int productQty);
-    //JpaRepository<Category,Integer>,这里的Integer指的是ID的类型是int，JpaRepository<>里对应就是哪一个实体类跟实体类ID对应的类型
-    //在springboot中不需要实现类，JPA会提供implementation
-    public List<Product> findAllBySellable(boolean sellable);
+
 }
