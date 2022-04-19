@@ -49,9 +49,10 @@ public class UserController {
     public int UserRegister(@RequestBody User user ){
 
         boolean userRegistered=userService.getUser(user.getEmail());
+        if (userRegistered)return -1;
         List<CartItem> list = new ArrayList<>();
         user.setCart(new Cart(list));
-        return userRegistered?-1: userService.saveUser(user);
+        return userService.saveUser(user);
 
     }
 
