@@ -8,8 +8,6 @@ public class VerifyStatus {
     @Id
     private String email;
     private String verifyCode;
-    private String inputCode;
-    private boolean verifyStatus;
 
     public String getEmail() {
         return email;
@@ -27,19 +25,4 @@ public class VerifyStatus {
         this.verifyCode = verifyCode;
     }
 
-    public String getInputCode() {
-        return inputCode;
-    }
-
-    public void setInputCode(String inputCode) {
-        this.inputCode = inputCode;
-    }
-
-    public boolean isVerifyStatus() {
-        return verifyStatus;
-    }
-
-    public void setVerifyStatus(boolean verifyStatus) {
-        this.verifyStatus = verifyStatus;
-    }
 }

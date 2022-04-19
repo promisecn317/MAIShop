@@ -1,16 +1,16 @@
 package com.maishopidea.maishopidea.service;
 
 import com.maishopidea.maishopidea.entity.VerifyStatus;
-import com.maishopidea.maishopidea.repo.VerifyStatusRepository;
+import com.maishopidea.maishopidea.repo.VerifyStatusRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class VerifyStatusServiceImpl implements VerifyStatusService{
 
-    private VerifyStatusRepository verifyRepo;
+    private VerifyStatusRepo verifyRepo;
     @Autowired
-    public void setVerifyRepo(VerifyStatusRepository verifyRepo){
+    public void setVerifyRepo(VerifyStatusRepo verifyRepo){
         this.verifyRepo = verifyRepo;
     }
 
@@ -28,5 +28,4 @@ public class VerifyStatusServiceImpl implements VerifyStatusService{
     public boolean compareCode(String inputCode, String verifyCode) {
         return inputCode.equals(verifyCode);
     }
-
 }

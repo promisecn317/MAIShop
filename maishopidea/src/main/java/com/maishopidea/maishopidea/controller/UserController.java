@@ -54,14 +54,16 @@ public class UserController {
         String emailAddress = user.getEmail();
         String verifyCode = verifyService.getVerifyCode(emailAddress);
 
-        boolean status = verifyService.compareCode(inputCode, verifyCode);
-        if (!status) return 0;
-
         boolean userRegistered = userService.getUser(emailAddress);
         if (userRegistered) return -1;
 
+        boolean status = verifyService.compareCode(inputCode, verifyCode);
+        if (!status) return -2;
+
+
         List<CartItem> list = new ArrayList<>();
         user.setCart(new Cart(list));
+
         return userService.saveUser(user);
     }
 
