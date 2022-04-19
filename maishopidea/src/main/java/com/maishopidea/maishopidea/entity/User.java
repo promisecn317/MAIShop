@@ -1,6 +1,5 @@
 package com.maishopidea.maishopidea.entity;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -17,9 +16,9 @@ public class User {
     private String userGender;
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    //@Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
+//    @Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
     private byte[] userAvatar;
-    //@ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
+//    @ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
 //    @OneToMany(fetch=FetchType.LAZY,targetEntity = Product.class)
 //    @JoinColumn(name = "product", columnDefinition = "longblob")
 //    private List<Product> products;
