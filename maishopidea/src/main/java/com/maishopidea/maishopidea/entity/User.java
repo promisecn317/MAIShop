@@ -7,11 +7,11 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (unique=true)
+    @Column(unique=true)
     private int userId;
-    @Column (name = "user_name")
+    @Column(name = "user_name")
     private String userName;
-    @Column (unique=true)
+    @Column(unique=true)
     private String email;
     private String password;
     private String userGender;
@@ -27,9 +27,7 @@ public class User {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(int userId, String username, String email, String password, String userGender, byte[] userAvatar, Cart cart) {
         this.userId = userId;
