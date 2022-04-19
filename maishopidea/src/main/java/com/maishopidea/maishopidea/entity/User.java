@@ -9,7 +9,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (unique=true)
     private int userId;
-    private String username;
+    @Column (name = "user_name")
+    private String userName;
     @Column (unique=true)
     private String email;
     private String password;
@@ -32,7 +33,7 @@ public class User {
 
     public User(int userId, String username, String email, String password, String userGender, byte[] userAvatar, Cart cart) {
         this.userId = userId;
-        this.username = username;
+        this.userName = username;
         this.email = email;
         this.password = password;
         this.userGender = userGender;
@@ -49,11 +50,11 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getEmail() {
