@@ -45,7 +45,7 @@ public class UserController {
         return result;
     }
 
-    @PostMapping(value="user")
+    @PostMapping(value="userRegister")
     public int UserRegister(@RequestBody User user ){
 
         boolean userRegistered=userService.getUser(user.getEmail());
