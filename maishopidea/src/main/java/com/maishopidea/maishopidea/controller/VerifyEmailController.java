@@ -2,6 +2,7 @@ package com.maishopidea.maishopidea.controller;
 
 import com.maishopidea.maishopidea.entity.VerifyEmail;
 import com.maishopidea.maishopidea.entity.VerifyStatus;
+import com.maishopidea.maishopidea.service.UserService;
 import com.maishopidea.maishopidea.service.VerifyEmailService;
 import com.maishopidea.maishopidea.service.VerifyStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class VerifyEmailController {
+    private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService){this.userService = userService;};
 
     private VerifyEmailService emailService;
     @Autowired
@@ -26,6 +30,9 @@ public class VerifyEmailController {
 
     @GetMapping(value = "verify_email")
     public String getVerifyEmail(@RequestParam("address") String address, VerifyEmail info, VerifyStatus status){
+        boolean userRegistered = userService.getUser(address);
+        if (userRegistered) return "改为HttpStatus";
+
         info.setTo(address);
         status.setEmail(address);
 

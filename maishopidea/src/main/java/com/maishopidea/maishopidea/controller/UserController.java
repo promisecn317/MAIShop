@@ -50,16 +50,12 @@ public class UserController {
     }
 
     @PostMapping(value="userRegister")
-    public int UserRegister(@RequestBody User user, @RequestParam(name = "input_code") String inputCode){
+    public int userRegister(@RequestBody User user, @RequestParam(name = "input_code") String inputCode){
         String emailAddress = user.getEmail();
         String verifyCode = verifyService.getVerifyCode(emailAddress);
 
-        boolean userRegistered = userService.getUser(emailAddress);
-        if (userRegistered) return -1;
-
         boolean status = verifyService.compareCode(inputCode, verifyCode);
         if (!status) return -2;
-
 
         List<CartItem> list = new ArrayList<>();
         user.setCart(new Cart(list));
@@ -68,4 +64,3 @@ public class UserController {
     }
 
 }
-
