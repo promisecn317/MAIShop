@@ -25,11 +25,11 @@ public class HomepageServiceimpl implements HomePageService {
 
     @Override
     public Page<Product> getProductPage(Integer page, Integer size) {
-        log.info("page is {}, size is {}", page, size);
+        log.info("page is {}, size is {}", page, size); //生成日志
         if (page <= 0) {
             page = 1;
         }
-        Pageable pageRequest = PageRequest.of(page - 1, size);
-        return homepageRepo.findAll(pageRequest);
+        Pageable pageRequest = PageRequest.of(page - 1, size);//PageRequest对象代表了查询的条件和约束
+        return homepageRepo.findAll(pageRequest);//需要使用PageRequest.of()来获取Pageable对象，因为该对象使用了静态方法代替了构造器
     }
 }
