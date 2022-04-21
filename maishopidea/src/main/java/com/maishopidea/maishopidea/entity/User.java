@@ -1,6 +1,5 @@
 package com.maishopidea.maishopidea.entity;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -8,18 +7,19 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (unique=true)
+    @Column(unique=true)
     private int userId;
-    private String username;
-    @Column (unique=true)
+    @Column(name = "user_name")
+    private String userName;
+    @Column(unique=true)
     private String email;
     private String password;
     private String userGender;
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    //@Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
+//    @Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
     private byte[] userAvatar;
-    //@ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
+//    @ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
 //    @OneToMany(fetch=FetchType.LAZY,targetEntity = Product.class)
 //    @JoinColumn(name = "product", columnDefinition = "longblob")
 //    private List<Product> products;
@@ -27,13 +27,11 @@ public class User {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(int userId, String username, String email, String password, String userGender, byte[] userAvatar, Cart cart) {
         this.userId = userId;
-        this.username = username;
+        this.userName = username;
         this.email = email;
         this.password = password;
         this.userGender = userGender;
@@ -50,11 +48,11 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getEmail() {

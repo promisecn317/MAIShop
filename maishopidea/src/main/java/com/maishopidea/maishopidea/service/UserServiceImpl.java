@@ -4,7 +4,6 @@ import com.maishopidea.maishopidea.repo.UserRepo;
 import com.maishopidea.maishopidea.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -23,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean getUser(String Email) {
         List<User> user= userRepo.findAllByEmail(Email);
-        return user.size()==0?false:true;
+        return user.size() != 0;
         //
     }
 
