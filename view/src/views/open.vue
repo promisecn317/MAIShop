@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <el-container style="height:100vh">
-      <el-aside width="600px" style="background-color: #07D89E">
+      <div style="background-color: #07D89E">
         <div class="title">
           <img :src="defaultImg2" alt=" "
-               style="width:460px;margin-top:50px;margin-left:50px"/>
+               style="width:460px;margin-top:10px;margin-left:50px"/>
         </div>
-        <div class="slogan">
-          <img :src="defaultImg1" alt=" " style="width:280px;margin-left:160px;margin-top: 30px"/>
+        <div class="slogan" style="margin-top:-170px;">
+          <img :src="defaultImg1" alt=" " style="width:280px;margin-left:160px;margin-top: 10"/>
         </div>
         <el-button class="btn" @click="goTo()" style="background-color:#FEF189;
                            border-color: #333333;
@@ -16,26 +16,26 @@
                            font-size: 25px;
                            border-radius: 25px;
                            margin-left: 150px;
-                           margin-top:70px">Get Start!</el-button>
-      </el-aside>
-      <el-main style="background-color: #07D89E">
+                           margin-top:10px">Get Start!</el-button>
+      </div>
+      <div style="background-color: #07D89E">
         <img :src="defaultImg" alt=" " style="width:520px;margin-top: 5px"/>
-      </el-main>
+      </div>
     </el-container>
   </div>
 </template>
 
 <script>
-import deImg  from '../assets/ov.jpg'
-import deImg1  from '../assets/slogan.jpg'
-import deImg2  from '../assets/title2.jpg'
+// import deImg  from '../assets/ov.jpg'
+// import deImg1  from '../assets/slogan.jpg'
+// import deImg2  from '../assets/logo.jpg'
 export default {
   name: "App",
   data () {
     return {
-      defaultImg:deImg,
-      defaultImg1:deImg1,
-      defaultImg2:deImg2
+      defaultImg:require('../assets/ov.jpg'),
+      defaultImg1:require('../assets/slogan.jpg'),
+      defaultImg2:require('../assets/logo.jpg')
     }
   },
   methods: {

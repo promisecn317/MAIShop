@@ -15,7 +15,8 @@
                         tabindex="1" auto-complete="on">
                 <i slot="prefix" class="el-input__icon el-icon-user-solid"></i></el-input>
             </el-col>
-            <el-button :loading="codeLoading" :disabled="isDisable" type="info" size="mini" style="background-color: #25c4b0" @click="sendMsg">Get Code
+            <el-button :loading="codeLoading" :disabled="isDisable" type="info" size="mini"
+                       style="background-color: #25c4b0" @click="sendMsg()">Get Code
             </el-button>
 
             <span class="status">{{ statusMsg }}</span>
@@ -29,7 +30,8 @@
 
           <el-form-item prop="pwd">
             <el-col :span="10">
-              <el-input :key="passwordType" ref="password" v-model="ruleForm.password" :type="passwordType" placeholder="请输入密码" name="password"
+              <el-input :key="passwordType" ref="password" v-model="ruleForm.password" :type="passwordType"
+                        placeholder="请输入密码" name="password"
                         tabindex="2" auto-complete="on">
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
@@ -37,12 +39,13 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" style="width: 42%; background-color: #25c4b0" @click="register">Registration</el-button>
+            <el-button type="primary" style="width: 42%; background-color: #25c4b0" @click="register()">Registration
+            </el-button>
           </el-form-item>
         </div>
 
         <p class="tips">Have account?
-            <el-button type="info" size="mini" style="background-color: #25c4b0" @click="goTo()">Log in</el-button>
+          <el-button type="info" size="mini" style="background-color: #25c4b0" @click="goTo()">Log in</el-button>
         </p>
       </el-form>
     </section>
@@ -53,8 +56,7 @@
 </template>
 
 <script>
-import {getEmailCode, register} from '../api/register';
-// import { encrypt } from '@/utils/rsaEncrypt'
+// import {getEmailCode, register} from '../api/register';
 
 
 export default {
@@ -65,8 +67,8 @@ export default {
       error: '',
       isDisable: false,
       codeLoading: false,
-      passwordType:'password',
-      redirect:undefined,
+      passwordType: 'password',
+      redirect: undefined,
       ruleForm: {
         email: '',
         code: '',
@@ -76,20 +78,20 @@ export default {
         email: [{
           required: true,
           type: 'email',
-          message: '请输入邮箱',
+          message: 'Input Email box',
           trigger: 'blur'
-        },{pattern:/^[a-zA-Z0-9_.-]{2,30}@(student.xjtlu.edu.cn)$/, message:'请输入西浦校园邮箱'}],
+        }, {pattern: /^[a-zA-Z0-9_.-]{2,30}@(student.xjtlu.edu.cn)$/, message: 'Please use XITLU campus email'}],
         code: [{
           required: true,
           type: 'string',
-          message: '请输入验证码',
+          message: 'Input verification code',
           trigger: 'blur'
-        },{pattern:/^\d{6}$/,message: '验证码必须是6位整数'}],
+        }, {pattern: /^\d{6}$/, message: 'Must be a 6-digit integer'}],
         password: [{
           required: true,
-          message: '创建密码',
+          message: 'Input password',
           trigger: 'blur'
-        }, {pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/, message: '密码必须同时包含数字与字母,且长度为 6-16位'},]
+        }, {pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/, message: 'Please contain both numbers and letters and be 6-16 characters in length'},]
       }
     }
   },
@@ -98,11 +100,13 @@ export default {
     goTo() {
       this.$router.push('/login');
     },
-     sendMsg: function () {
+    sendMsg() {
       const self = this
+      let email=''
+      email=this.ruleForm.email
       let emailPass
       let timerid
-       console.log(timerid)
+      console.log(timerid)
       if (timerid) {
         return false
       }
@@ -114,32 +118,43 @@ export default {
       if (!emailPass) {
         self.codeLoading = true
         self.statusMsg = '验证码发送中...'
-        getEmailCode(self.ruleForm.email).then(res => {
-          this.$message({
-            showClose: true,
-            message: '验证码发送成功，有效期为5分钟',
-            type: 'success'
-          })
-          let count = 60
-          self.ruleForm.code = ''
-          self.codeLoading = false
-          self.isDisable = true
-          self.statusMsg = `验证码已发送,${count--}秒后重新发送`
-          //使用延迟函数，显示剩余秒数
-          timerid = window.setInterval(function () {
+        //修改post的api接口路径
+        // this.$https.post('http://localhost:8080/api/getVerifyEmail',{email:self.ruleForm.email}).then(res=>{
+        // Json字符串形式请求
+        this.$https.post(`/api/verifyemail?email=+ ${email}`, {email: this.ruleForm.email}).then(res => {
+          if (res.status === 200) {
+            this.$message({
+              showClose: true,
+              message: 'Verification code sent successfully!',
+              type: 'success'
+            })
+            let count = 60
+            self.ruleForm.code = ''
+            self.codeLoading = false
+            self.isDisable = true
             self.statusMsg = `验证码已发送,${count--}秒后重新发送`
-            if (count <= 0) {
-              console.log('clear'+timerid)
-              window.clearInterval(timerid)
-              self.isDisable = false
-              self.statusMsg = ''
-            }
-          }, 1000)
+            //使用延迟函数，显示剩余秒数
+            timerid = window.setInterval(function () {
+              self.statusMsg = `验证码已发送,${count--}秒后重新发送`
+              if (count <= 0) {
+                console.log('clear' + timerid)
+                window.clearInterval(timerid)
+                self.isDisable = false
+                self.statusMsg = ''
+              }
+            }, 1000)
+          } else {
+            this.$message({
+              showClose: true,
+              message: 'Already registered, log in!',
+              type: 'error'
+            })
+          }
         }).catch(err => {
           this.isDisable = false
           this.statusMsg = ''
           this.codeLoading = false
-          console.log(err.response.data.message)
+          console.log(err)
         })
       }
     },
@@ -147,24 +162,28 @@ export default {
 
     // 用户注册
     register() {
-       this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          const user = {
-            email: this.ruleForm.email,
-            code: this.ruleForm.code,
-            password: this.ruleForm.password
-          }
-          register(this.ruleForm.code, user).then(res => {
-            this.$message({
-              showClose: true,
-              message: '注册成功，正在跳转到登录界面...',
-              type: 'success'
-            })
-            setTimeout(() => {
-              this.$router.push('/login')
-            }, 2000)
-          }).catch(err => {
-            console.log(err.response.data.message)
+      let code = ''
+      code = this.ruleForm.code
+      const user = {
+        email: this.ruleForm.email,
+        code: this.ruleForm.code,
+        password: this.ruleForm.password
+      }
+      this.$https.post(`/api/reg/person?code=+ ${code}`, user).then(res => {
+        if (res.status === 200) {
+          this.$message({
+            showClose: true,
+            message: 'Registration succeeded, skipping to login page...',
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.$router.push('/login')
+          }, 2000)
+        } else {
+          this.$message({
+            showClose: true,
+            message: 'Registration failed. Please try again.',
+            type: 'error'
           })
         }
       })
@@ -183,7 +202,7 @@ export default {
   height: 110vh;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(../assets/new.jpg);
+  background-image: url("~@/assets/new.jpg")
 }
 
 .ms-register {
