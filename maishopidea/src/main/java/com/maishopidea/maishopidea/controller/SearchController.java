@@ -31,7 +31,11 @@ public class SearchController {
         return products == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null) : ResponseEntity.ok().body(products);
     }
 
-    //分页查询
+
+
+
+
+
 
 
     //判断多个keywords的排序
@@ -40,6 +44,8 @@ public class SearchController {
     //仅返回name   price  image
 
     //test
+
+    //分页查询
 
 //    @RequestMapping("search")
 //    public String search(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,

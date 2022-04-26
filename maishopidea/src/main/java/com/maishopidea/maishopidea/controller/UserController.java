@@ -8,6 +8,7 @@ import com.maishopidea.maishopidea.service.UserService;
 import com.maishopidea.maishopidea.service.VerifyStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,48 +23,49 @@ public class UserController {
     private UserService userService;
 
     private VerifyStatusService verifyService;
+
     @Autowired
-    public void setVerifyService(VerifyStatusService verifyService){
+    public void setVerifyService(VerifyStatusService verifyService) {
         this.verifyService = verifyService;
     }
 
-    @PostMapping(value="login")
+    @PostMapping(value = "login")
     @ResponseBody
-
-    // @RequestBody User acceptuser
     public Result<?> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
-                            @RequestParam("userPassword") String inputpassword
+                               @RequestParam("userPassword") String inputpassword
     ) throws Exception {
         //User user = userService.userLogin(inputUserEmail, inputpassword);
-
-        User user =userService.findByEmail(inputUserEmail);
-        String userpsw =user.getPassword();
-        Map<String, String> result = new HashMap<>();
-
-        if (user == null) {
-            result.put("flag", "false");
-        } else{
-            if (!userpsw.equals(inputpassword.trim())){
+        try {
+            User user = userService.findByEmail(inputUserEmail);
+            String userpsw = user.getPassword();
+            Map<String, String> result = new HashMap<>();
+            if (!userpsw.equals(inputpassword.trim())) {
                 result.put("flag", "false");
-            }else{
+                return Result.error("204", "Incorrect username or password");
+            } else {
                 result.put("flag", "true");
+                return Result.success();
             }
+        } catch (NullPointerException e) {
+            Map<String, String> result = new HashMap<>();
+            result.put("flag", "false");
+            return Result.error("204", "User does not exist");
         }
-        return Result.success();
     }
 
-    @PostMapping(value="userRegister")
-    public int userRegister(@RequestBody User user, @RequestParam(name = "input_code") String inputCode){
-        String emailAddress = user.getEmail();
-        String verifyCode = verifyService.getVerifyCode(emailAddress);
 
-        boolean status = verifyService.compareCode(inputCode, verifyCode);
-        if (!status) return -2;
+        @PostMapping(value = "userRegister")
+        public int userRegister (@RequestBody User user, @RequestParam(name = "input_code") String inputCode){
+            String emailAddress = user.getEmail();
+            String verifyCode = verifyService.getVerifyCode(emailAddress);
 
-        List<CartItem> list = new ArrayList<>();
-        user.setCart(new Cart(list));
+            boolean status = verifyService.compareCode(inputCode, verifyCode);
+            if (!status) return -2;
 
-        return userService.saveUser(user);
-    }
+            List<CartItem> list = new ArrayList<>();
+            user.setCart(new Cart(list));
 
+            return userService.saveUser(user);
+        }
 }
+
