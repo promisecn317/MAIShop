@@ -1,5 +1,6 @@
 package com.maishopidea.maishopidea.controller;
 
+import com.maishopidea.maishopidea.common.Result;
 import com.maishopidea.maishopidea.entity.Cart;
 import com.maishopidea.maishopidea.entity.CartItem;
 import com.maishopidea.maishopidea.entity.User;
@@ -30,8 +31,8 @@ public class UserController {
     @ResponseBody
 
     // @RequestBody User acceptuser
-    public Map<String, String> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
-                                         @RequestParam("userPassword") String inputpassword
+    public Result<?> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
+                            @RequestParam("userPassword") String inputpassword
     ) throws Exception {
         //User user = userService.userLogin(inputUserEmail, inputpassword);
 
@@ -48,7 +49,7 @@ public class UserController {
                 result.put("flag", "true");
             }
         }
-        return result;
+        return Result.success();
     }
 
     @PostMapping(value="userRegister")
