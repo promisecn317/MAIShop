@@ -32,7 +32,7 @@ public class ProductContorller {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value = "productInformation")
+    @PostMapping(value = "saveProductInformation")
     public ResponseEntity<Product> saveInformation(@RequestPart("product") Product product, @RequestParam(name="productImage",required = false)
             MultipartFile productImage) throws IOException {
         Product product1=new Product();

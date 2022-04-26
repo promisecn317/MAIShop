@@ -33,19 +33,16 @@ public class VerifyEmailController {
     }
 
     @PostMapping(value = "verify_email")
-    public ResponseEntity getVerifyEmail(@RequestParam("address") String address, VerifyEmail info, VerifyStatus status){
+    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status){
         boolean userRegistered = userService.getUser(address);
         if (userRegistered) return new ResponseEntity(HttpStatus.CONFLICT);
 
         info.setTo(address);
         status.setEmail(address);
-
         String verifyCode = emailService.generateCode();
         info.setVerifyCode(verifyCode);
         status.setVerifyCode(verifyCode);
-
         String thisEmail = verifyService.saveEmailAndCode(status);
-
         emailService.sendVerifyEmail(info);
         return new ResponseEntity(HttpStatus.OK);
     }
