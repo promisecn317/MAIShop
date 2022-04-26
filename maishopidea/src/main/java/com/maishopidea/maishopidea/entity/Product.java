@@ -16,7 +16,10 @@ public class Product {
     private double productPrice;
     private int productQty;
     private boolean sellable;
-    @ManyToOne
+
+
+
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "seller")
     private User user;
     @Lob
@@ -26,6 +29,14 @@ public class Product {
 
     //Constructor method for new
     public Product() {}
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public double getProductPrice() { return productPrice; }
 

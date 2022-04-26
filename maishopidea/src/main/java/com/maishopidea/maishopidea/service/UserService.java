@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 public interface UserService {
      @Nullable
      User findByEmail(String userEmail) throws Exception;
-     User findByPassword(String userPassword) throws Exception;
-     public User getUser(String Email);
-     public int saveUser(User prod);
-     //public User userLogin(String userEmail, String password);
-
+     User findByUserId(String userId) throws Exception;
+     User getUser(String Email);
+     int saveUser(User prod);
+     User findById(int userId);
 }

@@ -5,6 +5,8 @@ import com.maishopidea.maishopidea.repo.VerifyStatusRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VerifyStatusServiceImpl implements VerifyStatusService{
 
@@ -15,17 +17,25 @@ public class VerifyStatusServiceImpl implements VerifyStatusService{
     }
 
     @Override
-    public String saveEmailAndCode(VerifyStatus status){
-        return verifyRepo.save(status).getEmail();
+    public void saveEmailAndCode(VerifyStatus status){
+        verifyRepo.save(status);
     }
 
     @Override
     public String getVerifyCode(String address) {
-        return verifyRepo.findVerifyStatusByEmail(address).getVerifyCode();
+        return verifyRepo.findByEmail(address).getVerifyCode();
     }
 
     @Override
     public boolean compareCode(String inputCode, String verifyCode) {
         return inputCode.equals(verifyCode);
     }
+
+    @Override
+    public VerifyStatus getVerifyStatusByEmail(String email) {
+        Optional<VerifyStatus> verifyStatus = Optional.ofNullable(verifyRepo.findByEmail(email));
+        return verifyStatus.orElse(null);
+    }
+
+
 }

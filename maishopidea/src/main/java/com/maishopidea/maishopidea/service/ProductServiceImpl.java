@@ -35,4 +35,5 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getProductsByUserId(int userId) {
         return productRepo.findProductsByUser_userId(userId);
     }
+
 }
