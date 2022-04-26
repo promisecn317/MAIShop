@@ -1,38 +1,35 @@
 package com.maishopidea.maishopidea.controller;
 
+import com.maishopidea.maishopidea.common.Result;
 import com.maishopidea.maishopidea.entity.Product;
-import com.maishopidea.maishopidea.repo.ProductRepo;
 import com.maishopidea.maishopidea.service.ProductService;
+import com.maishopidea.maishopidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ProductContorller {
-//    @Autowired
-//    private ProductRepo productRepo;
-
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value="getsellable")
     public ResponseEntity<List<Product> > getSellableProduct(){
         List<Product>products= productService.getSellable();
         return products==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(products );
-        //instead just return the result of service, we return the result in the body of responseEntity
-
     }
+
     @GetMapping(value="getproduct")
     public ResponseEntity<Product> getProduct(int productId) {
         Product product= productService.getProduct(productId);
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
-
     }
 
     @PostMapping(value = "productInformation")
@@ -67,14 +64,17 @@ public class ProductContorller {
         product.setSellable(prod.isSellable());
         product.setProductDescription(prod.getProductDescription());
         product.setCreatedDate(prod.getCreatedDate());
-
         
         if (productImage==null)product.setProductImage(null);
         else product.setProductImage(productImage.getBytes());
         productService.saveProduct(product);
-
     }
 
-
+    @PostMapping(value = "my_product")
+    public Result<List<Product>> myProductList(@RequestParam(name = "userEmail") String userEmail) throws Exception {
+        int userId = userService.findByEmail(userEmail).getUserId();
+        List<Product> sellerProducts = productService.getProductsByUserId(userId);
+        return Result.success(sellerProducts);
+    }
 
 }

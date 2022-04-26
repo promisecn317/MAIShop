@@ -10,24 +10,22 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (unique=true)
     private int productId;
-
     private String productName;
     private String productDescription;
     private Date createdDate;
     private double productPrice;
     private int productQty;
     private boolean sellable;
-
+    @ManyToOne
+    @JoinColumn(name = "seller")
+    private User user;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     //@Column(name = "productImage", columnDefinition = "longblob", nullable = true)
     private byte[] productImage;
 
     //Constructor method for new
-    public Product() {
-
-    }
-
+    public Product() {}
 
     public double getProductPrice() { return productPrice; }
 
@@ -41,7 +39,6 @@ public class Product {
 
     public void setSellable(boolean sellable) { this.sellable = sellable; }
 
-
     public byte[] getProductImage() { return productImage; }
 
     public void setProductImage(byte[] productPicture) { this.productImage = productPicture; }
@@ -53,7 +50,6 @@ public class Product {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
-
 
     public int getProductId() {
         return productId;

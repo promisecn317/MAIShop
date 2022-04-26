@@ -14,5 +14,5 @@ public interface ProductService {
 
     Product saveProduct(Product product);    //product to return product information
 
-
+    List<Product> getProductsByUserId(int userId);
 }

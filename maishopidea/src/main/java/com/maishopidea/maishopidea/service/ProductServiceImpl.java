@@ -10,10 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class ProductServiceImpl implements ProductService{
-@Autowired ProductRepo productRepo;
+    @Autowired ProductRepo productRepo;
 
     @Override
     public  List<Product> getSellable() {
@@ -23,12 +22,17 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProduct(int productId) {
         Optional<Product> product=productRepo.findById(productId);
-        return product.isPresent()?product.get():null;
+        return product.orElse(null);
     }
 
     @Override
     public  Product saveProduct(Product product) {
         productRepo.save(product);
         return product;
+    }
+
+    @Override
+    public List<Product> getProductsByUserId(int userId) {
+        return productRepo.findProductsByUser_userId(userId);
     }
 }

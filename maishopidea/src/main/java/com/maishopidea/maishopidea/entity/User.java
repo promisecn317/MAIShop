@@ -1,10 +1,10 @@
 package com.maishopidea.maishopidea.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique=true)
@@ -26,6 +26,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
+    @OneToMany(mappedBy = "user")
+    private List<Product> sellerProducts;
 
     public User() {}
 
