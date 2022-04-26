@@ -47,7 +47,7 @@ public class VerifyEmailController {
         info.setVerifyCode(verifyCode);
         status.setVerifyCode(verifyCode);
 
-        VerifyStatus verifyStatus = verifyService.getVerifyStatusByEmail(email);
+        VerifyStatus verifyStatus = verifyService.getVerifyStatusByEmail(status.getEmail());
         if (verifyStatus == null) {
             verifyService.saveEmailAndCode(status);
         } else {

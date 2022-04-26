@@ -60,8 +60,8 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "userRegister")
-    public ResponseEntity userRegister (@RequestBody User user, @RequestParam(name = "code") String inputCode){
+    @PostMapping(value = "userRegister/{code}")
+    public ResponseEntity userRegister (@RequestBody User user, @PathVariable(name = "code") String inputCode){
         String emailAddress = user.getEmail();
         String verifyCode = verifyService.getVerifyCode(emailAddress);
 
@@ -75,4 +75,3 @@ public class UserController {
         return new ResponseEntity("Register Success.", HttpStatus.OK);
     }
 }
-

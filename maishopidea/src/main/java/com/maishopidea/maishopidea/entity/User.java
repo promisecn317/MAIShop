@@ -49,14 +49,6 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return userName;
-    }
-
-    public void setUsername(String username) {
-        this.userName = username;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -93,8 +85,23 @@ public class User {
         return cart;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setCart(Cart cart) {this.cart = cart;}
+
+    public String getUserName() {
+        return userName;
     }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<Product> getSellerProducts() {
+        return sellerProducts;
+    }
+
+    public void setSellerProducts(List<Product> sellerProducts) {
+        this.sellerProducts = sellerProducts;
+    }
+
 }
 
