@@ -3,10 +3,13 @@ package com.maishopidea.maishopidea.controller;
 import com.maishopidea.maishopidea.common.Result;
 import com.maishopidea.maishopidea.entity.Cart;
 import com.maishopidea.maishopidea.entity.CartItem;
+import com.maishopidea.maishopidea.entity.Product;
 import com.maishopidea.maishopidea.entity.User;
 import com.maishopidea.maishopidea.service.UserService;
 import com.maishopidea.maishopidea.service.VerifyStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,8 +34,8 @@ public class UserController {
 
     @PostMapping(value = "login")
     @ResponseBody
-    public Result<?> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
-                               @RequestParam("userPassword") String inputpassword
+    public ResponseEntity<User> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
+                                          @RequestParam("userPassword") String inputpassword
     ) throws Exception {
         //User user = userService.userLogin(inputUserEmail, inputpassword);
         try {
@@ -41,15 +44,15 @@ public class UserController {
             Map<String, String> result = new HashMap<>();
             if (!userpsw.equals(inputpassword.trim())) {
                 result.put("flag", "false");
-                return Result.error("204", "Incorrect username or password");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             } else {
                 result.put("flag", "true");
-                return Result.success();
+                return ResponseEntity.status(HttpStatus.OK).body(null);
             }
         } catch (NullPointerException e) {
             Map<String, String> result = new HashMap<>();
             result.put("flag", "false");
-            return Result.error("204", "User does not exist");
+            return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body(null);
         }
     }
 
