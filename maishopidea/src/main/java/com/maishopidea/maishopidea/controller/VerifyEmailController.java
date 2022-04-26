@@ -33,9 +33,9 @@ public class VerifyEmailController {
     }
 
     @PostMapping(value = "verify_email")
-    public ResponseEntity.BodyBuilder getVerifyEmail(@RequestParam("address") String address, VerifyEmail info, VerifyStatus status){
+    public ResponseEntity getVerifyEmail(@RequestParam("address") String address, VerifyEmail info, VerifyStatus status){
         boolean userRegistered = userService.getUser(address);
-        if (userRegistered) return ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userRegistered) return new ResponseEntity(HttpStatus.CONFLICT);
 
         info.setTo(address);
         status.setEmail(address);
@@ -47,7 +47,7 @@ public class VerifyEmailController {
         String thisEmail = verifyService.saveEmailAndCode(status);
 
         emailService.sendVerifyEmail(info);
-        return ResponseEntity.status(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
