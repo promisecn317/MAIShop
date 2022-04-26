@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,20 +33,27 @@ public class VerifyEmailController {
     }
 
     @PostMapping(value = "/user/verify_email")
-    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status) {
-        User user = userService.getUser(address);
-        if (user != null) {
+    public ResponseEntity getVerifyEmail(@RequestBody User user, VerifyEmail info, VerifyStatus status) {
+        String email = user.getEmail();
+        User checkUser = userService.getUser(email);
+        if (checkUser != null) {
             return new ResponseEntity("Email already registered.", HttpStatus.CONFLICT);
         }
 
-        info.setTo(address);
-        status.setEmail(address);
+        info.setTo(email);
+        status.setEmail(email);
 
         String verifyCode = emailService.generateCode();
         info.setVerifyCode(verifyCode);
         status.setVerifyCode(verifyCode);
 
-        verifyService.saveEmailAndCode(status);
+        VerifyStatus verifyStatus = verifyService.getVerifyStatusByEmail(email);
+        if (verifyStatus == null) {
+            verifyService.saveEmailAndCode(status);
+        } else {
+            status.setId(verifyStatus.getId());
+            verifyService.saveEmailAndCode(status);
+        }
 
         emailService.sendVerifyEmail(info);
         return new ResponseEntity("Success", HttpStatus.OK);

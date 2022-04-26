@@ -61,17 +61,18 @@ public class UserController {
     }
 
     @PostMapping(value = "userRegister")
-    public int userRegister (@RequestBody User user, @RequestParam(name = "input_code") String inputCode){
+    public ResponseEntity userRegister (@RequestBody User user, @RequestParam(name = "code") String inputCode){
         String emailAddress = user.getEmail();
         String verifyCode = verifyService.getVerifyCode(emailAddress);
 
         boolean status = verifyService.compareCode(inputCode, verifyCode);
-        if (!status) return -2;
+        if (!status) return new ResponseEntity("Code is wrong",HttpStatus.BAD_REQUEST);
 
         List<CartItem> list = new ArrayList<>();
         user.setCart(new Cart(list));
 
-        return userService.saveUser(user);
+        userService.saveUser(user);
+        return new ResponseEntity("Register Success.", HttpStatus.OK);
     }
 }
 
