@@ -1,5 +1,6 @@
 package com.maishopidea.maishopidea.controller;
 
+import com.maishopidea.maishopidea.entity.User;
 import com.maishopidea.maishopidea.entity.VerifyEmail;
 import com.maishopidea.maishopidea.entity.VerifyStatus;
 import com.maishopidea.maishopidea.service.UserService;
@@ -31,9 +32,13 @@ public class VerifyEmailController {
     }
 
     @PostMapping(value = "/user/verify_email")
-    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status){
-        boolean userRegistered = userService.getUser(address);
-        if (userRegistered) return new ResponseEntity(HttpStatus.CONFLICT);
+    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status)
+    throws NullPointerException{
+        try {
+            userService.getUser(address);
+        } catch(NullPointerException e) {
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
 
         info.setTo(address);
         status.setEmail(address);

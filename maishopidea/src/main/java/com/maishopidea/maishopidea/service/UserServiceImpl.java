@@ -14,16 +14,15 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String Email) {
         return userRepo.findByEmail(Email);
     }
+
     @Override
     public User findByPassword(String Password) {
         return userRepo.findByPassword(Password);
     }
 
     @Override
-    public boolean getUser(String Email) {
-        List<User> user= userRepo.findAllByEmail(Email);
-        return user.size() != 0;
-        //
+    public User getUser(String Email) {
+        return userRepo.findByEmail(Email);
     }
 
     @Override
