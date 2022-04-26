@@ -32,12 +32,10 @@ public class VerifyEmailController {
     }
 
     @PostMapping(value = "/user/verify_email")
-    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status)
-    throws NullPointerException{
-        try {
-            userService.getUser(address);
-        } catch(NullPointerException e) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+    public ResponseEntity getVerifyEmail(@RequestParam("email") String address, VerifyEmail info, VerifyStatus status) {
+        User user = userService.getUser(address);
+        if (user != null) {
+            return new ResponseEntity("Email already registered.", HttpStatus.CONFLICT);
         }
 
         info.setTo(address);
@@ -50,7 +48,7 @@ public class VerifyEmailController {
         verifyService.saveEmailAndCode(status);
 
         emailService.sendVerifyEmail(info);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("Success", HttpStatus.OK);
     }
 
 }
