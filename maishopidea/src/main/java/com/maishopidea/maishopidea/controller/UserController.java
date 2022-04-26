@@ -32,15 +32,19 @@ public class UserController {
         this.verifyService = verifyService;
     }
 
+//    @RequestParam(name = "userEmail") String inputUserEmail,
+//    @RequestParam("userPassword") String inputpassword
+
     @PostMapping(value = "login")
     @ResponseBody
-    public ResponseEntity<User> userLogin(@RequestParam(name = "userEmail") String inputUserEmail,
-                                          @RequestParam("userPassword") String inputpassword
+    public ResponseEntity<User> userLogin(@RequestBody User user
     ) throws Exception {
+        String inputUserEmail=user.getEmail();
+        String inputpassword=user.getPassword();
         //User user = userService.userLogin(inputUserEmail, inputpassword);
         try {
-            User user = userService.findByEmail(inputUserEmail);
-            String userpsw = user.getPassword();
+            User user1 = userService.findByEmail(inputUserEmail);
+            String userpsw = user1.getPassword();
             Map<String, String> result = new HashMap<>();
             if (!userpsw.equals(inputpassword.trim())) {
                 result.put("flag", "false");
