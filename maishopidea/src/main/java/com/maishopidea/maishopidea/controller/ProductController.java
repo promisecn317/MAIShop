@@ -1,7 +1,6 @@
 package com.maishopidea.maishopidea.controller;
 
 import com.maishopidea.maishopidea.entity.Product;
-import com.maishopidea.maishopidea.entity.User;
 import com.maishopidea.maishopidea.service.ProductService;
 import com.maishopidea.maishopidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,18 +43,15 @@ public class ProductController {
         product1.setProductPrice(product.getProductPrice());
         product1.setProductQty(product.getProductQty());
         product1.setSellable(true);
+        product1.setUserId(userId);
         if(productImage==null)
         {
             product1.setProductImage(null);
         }else {
             product1.setProductImage(productImage.getBytes());//.getBytes()
         }
-            User user = userService.findById(userId);
-            //User user = product.getUser();//userService.findByUserId(userId);
-            List<Product> productList =user.getSellerProducts() ;//new ArrayList<>()
-            productList.add(product1);
-            productService.saveProduct(product1);
 
+        productService.saveProduct(product1);
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
 
