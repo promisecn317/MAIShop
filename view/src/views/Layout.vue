@@ -85,8 +85,8 @@
   
 }
     .home-container{
-        position:relative;
-        height:100%;
+        //position:absolute;
+        height:100vh;
     }
     .el-header {
       //  margin:-8px;

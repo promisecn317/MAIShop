@@ -6,16 +6,20 @@
         <el-button type="primary" icon="el-icon-search" height="50px">search</el-button>
  </div>
   <div class="goods-box">
-    <div class="goods-item" :span="6"  v-for="(o, index) in 6" :key="index">
+    <div class="goods-item" :span="6"  v-for="item in list" 
+              :key="item.productId"  
+              :img="item.productImg"
+              :title="item.productName"
+              :price="item.productPrice">
       <el-card :body-style="{ padding: '1px' }">
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <img src="" class="image">
         <div style="padding: 0px;">
-          <span style="display: block;">Title</span>
-          <span style="display: block;">price：￥5</span>
+          <span style="display: block;"></span>
+          <span style="display: block;"></span>
           <div class="info-bottom">
             <el-button type="text">Details</el-button>
             <div class="bottom">
-              <el-button class="info-btn" type="text"  icon="el-icon-circle-plus" ></el-button>
+              <el-button class="info-btn" type="text"  icon="el-icon-circle-plus" onclick="addCart()"></el-button>
               <el-button class="info-btn" type="text"  icon="el-icon-more"></el-button>
             </div>
           </div>
@@ -41,20 +45,49 @@ export default {
       goodData:[]
     }
   },
+  created () {
+    this. goodList()
+    // this.$http.post('/api/xxxxxx',{ a: 1  }).then(res => {
+
+    // }).catch(err => {
+
+    // })
+  },
   methods:{
     data() {
     return {
-      list: [],
+
+
+
+
+
+
+
+
       showEmpty: true
     };
   },
    goodList(){
-     this.$axios.get('http://localhost8080/index',{
+     this.$axios.get('http://localhost:8080/product_shelve',{
         params:{
           product_id:this.$route.query.product_id
         }
       }).then(res=>{
         var result=res.data;
+        if(result.code==0){
+          this.productArr=result.data;
+        }
+      })
+   },
+   addCart(goodId) {
+      this.$axios.get('http://localhost:8080/add',{
+        params:{
+          ProductId:goodId,
+          CartId:''
+        }
+      }).then(res=>{
+        var result=res.data;
+        this.$router.push('/cart')
         if(result.code==0){
           this.productArr=result.data;
         }
@@ -106,7 +139,7 @@ export default {
 
   } 
   .el-button{
-    float: certer;
+    float: left;
     color: #0d591d;
     background-color: #FEF189;
     

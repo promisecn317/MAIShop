@@ -87,19 +87,21 @@ export default {
         desc: [{required: true, message: 'The description cannot be empty', trigger: 'blur'}
         ],
       },
-      param: "",
+      param: new FormData(),
       fileList: [],
     };
   },
   methods: {
     onSubmit() {
       console.log("submit!");
-      let formData = new FormData()
-      formData.append("productName", this.form.title);
-      formData.append("productPrice", this.form.price);
-      formData.append("productDescription", this.form.desc);
+      let _this = this;
+      this.$refs.upload.submit();
+      this.param.append("productName", _this.form.title);
+      this.param.append("productPrice", _this.form.price);
+      this.param.append("productDescription", _this.form.desc);
+// this.param.append("Product", _this.form.param);
       console.log(this.param);
-      this.$axios.post("http://localhost:8088/productInformation", {product:formData}).then(res => {
+      this.$axios.post("http://localhost:8088/newProductInformation", {product:this.param}).then(res => {
         this.$message({
           showClose: true,
           message: " post successfully！",
