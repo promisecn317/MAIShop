@@ -92,7 +92,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "my_product")
-    public ResponseEntity myProductList(@RequestParam(name = "userEmail") String email) throws Exception {
+    public ResponseEntity myProductList(@RequestParam(name = "email") String email) throws Exception {
         int userId = Objects.requireNonNull(userService.findByEmail(email)).getUserId();
         List<Product> sellerProducts = productService.getSellerProductsById(userId);
         if (sellerProducts.size() == 0) {
