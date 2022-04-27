@@ -34,32 +34,6 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value = "saveProductInformation")
-    public ResponseEntity<Product> saveProductInformation(@RequestPart("product") Product product, @RequestParam(name = "userId") int userId,@RequestParam(name="productImage",required = false)
-            MultipartFile productImage) throws Exception {
-        Product product1=new Product();
-        product1.setProductId(product.getProductId());
-        product1.setProductName(product.getProductName());
-        product1.setProductDescription(product.getProductDescription());
-        product1.setCreatedDate(product.getCreatedDate());
-        product1.setProductPrice(product.getProductPrice());
-        product1.setProductQty(product.getProductQty());
-        product1.setSellable(true);
-        if(productImage==null)
-        {
-            product1.setProductImage(null);
-        }else {
-            product1.setProductImage(productImage.getBytes());//.getBytes()
-        }
-            User user = userService.findById(userId);
-            //User user = product.getUser();//userService.findByUserId(userId);
-//            List<Product> productList =user.getSellerProducts() ;//new ArrayList<>()
-//            productList.add(product1);
-            productService.saveProduct(product1);
-
-        return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
-    }
-
     @PostMapping(value = "newProductInformation")
     public ResponseEntity<Product> newInformation(@RequestPart Product product, @RequestParam(name="productImage",required = false)
             MultipartFile productImage) throws IOException {
@@ -69,7 +43,7 @@ public class ProductController {
         product1.setProductDescription(product.getProductDescription());
         product1.setCreatedDate(product.getCreatedDate());
         product1.setProductPrice(product.getProductPrice());
-        product1.setProductQty(product.getProductQty());
+        product1.setProductQty(1);
         product1.setSellable(true);
         if(productImage==null)
         {
