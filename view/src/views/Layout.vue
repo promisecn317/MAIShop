@@ -66,9 +66,9 @@
 <script>
 	export default {
 		mounted(){
-			this.$axios.get('/goods.json').then(res=>{
-				console.log(res.data);
-			})
+			// this.$axios.get('/goods.json').then(res=>{
+			// 	console.log(res.data);
+			// })
 		}
     
 	}

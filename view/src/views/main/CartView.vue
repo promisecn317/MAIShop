@@ -21,7 +21,7 @@
               </el-table-column>
               <el-table-column prop="shop" align="center">
                 <template slot-scope="scope">
-                  <span class="shop">{{scope.row.shop}}</span>
+                  <span class="shop">{{scope.row.name}}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="price" label="Price" align="center">
@@ -53,37 +53,29 @@ export default {
   data() {
     return {
       imgUrl: require("../../assets/logo.jpg"),
-      tableData: [
-        //{productId:1, shopImg: require("../../assets/ov.jpg"), shop: '玉龙茶香', price: 1300},
-        //{shopImg: require("../../assets/ov.jpg"), shop: '蒂普提克无花果', price: 800},
-        //{shopImg: require("../../assets/ov.jpg"), shop: '米勒海莉诗', price: 750}
-      ],
+      tableData:[],
       multipleSelection: [],
     }
   },
-  methods: {
-  name: "Cartcontrol",
-  props:{
-    food:{
-      type:Object
-    }
+  created() {
+    this.cartList()
   },
+
   methods:{
     cartList(){
-     this.$axios.get('http://192.168.56.1:8088/show',{
-        params:{
-          product_id:this.$route.query.product_id
-        }
-      }).then(res=>{
-        var result=res.data;
-        if(result.code==0){
-          this.productArr=result.data;
-        }
-      })
-   }   
-},
-
-// 删除选中单个商品
+         let userId = localStorage.getItem("userId")
+        let that=this;
+         this.$https.get('http://localhost:8088/show',{
+              params:{
+                userId: Number(userId)
+              }
+          }).then(res=>{
+            var result=res.data;
+            console.log(result)
+            that.tableData=result;
+          })
+     },
+    // 删除选中单个商品
     handleDelete(index, row) {
       this.$confirm('确定删除该商品，不再看看吗？', '提示', {
         confirmButtonText: 'Yes',
@@ -93,11 +85,11 @@ export default {
         this.$https.post('http://192.168.10.105/cart/delete',{userId:this.userId,productId:this.productId}).then(res=>{
           this.tableData.splice(index, 1);
           this.$message({
-              showClose:'false',
-              duration:3000,
-              type: 'success',
-              message: 'Delete succeeded!'
-            });
+            showClose:'false',
+            duration:3000,
+            type: 'success',
+            message: 'Delete succeeded!'
+          });
           this.tableData=this.tableData
         })
         //删除数组中指定的元素
@@ -121,12 +113,12 @@ export default {
     //提交购物车功能
     handleSubmit(){
       this.$https.post('/api/cart_index/submit',{userId:this.userId,productId:this.productId}).then(res=>{
-        if(res.data.code=200){
-        this.$message({
-          showClose:'true',
-          type: 'success',
-          message: 'The goods have been submitted successfully. Please contact the seller~'
-        })
+        if(res.data.code===200){
+          this.$message({
+            showClose:'true',
+            type: 'success',
+            message: 'The goods have been submitted successfully. Please contact the seller~'
+          })
         }else{
           this.$message({
             showClose: 'true',
@@ -137,6 +129,9 @@ export default {
       })
     }
   }
+
+
+
   }
 
 </script>

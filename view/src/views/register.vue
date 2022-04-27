@@ -121,7 +121,7 @@ export default {
         //修改post的api接口路径
         // this.$https.post('http://localhost:8080/api/getVerifyEmail',{email:self.ruleForm.email}).then(res=>{
         // Json字符串形式请求
-        this.$https.post(`/api/verifyemail?email=+ ${email}`, {email: this.ruleForm.email}).then(res => {
+        this.$https.post('/user/verify_email',{email:this.ruleForm.email}).then(res => {
           if (res.status === 200) {
             this.$message({
               showClose: true,
@@ -143,7 +143,7 @@ export default {
                 self.statusMsg = ''
               }
             }, 1000)
-          } else {
+          } else if(res.status === 409){
             this.$message({
               showClose: true,
               message: 'Already registered, log in!',
@@ -166,10 +166,10 @@ export default {
       code = this.ruleForm.code
       const user = {
         email: this.ruleForm.email,
-        code: this.ruleForm.code,
+        // code: this.ruleForm.code,
         password: this.ruleForm.password
       }
-      this.$https.post(`/api/reg/person?code=+ ${code}`, user).then(res => {
+      this.$https.post(`/user/userRegister/${code}`, user).then(res => {
         if (res.status === 200) {
           this.$message({
             showClose: true,
@@ -179,10 +179,10 @@ export default {
           setTimeout(() => {
             this.$router.push('/login')
           }, 2000)
-        } else {
+        } else if(res.status === 400){
           this.$message({
             showClose: true,
-            message: 'Registration failed. Please try again.',
+            message: 'Failed. Please try again.',
             type: 'error'
           })
         }
@@ -202,7 +202,7 @@ export default {
   height: 110vh;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url("~@/assets/new.jpg")
+  background-image: url(../assets/new.jpg);
 }
 
 .ms-register {

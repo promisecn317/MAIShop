@@ -23,10 +23,9 @@
       </el-form-item>
 
 
-      <router-link :to="{name:'/'}"><el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #25c4b0"
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #25c4b0"
                  @click.native.prevent="handleLogin">Log in
       </el-button>
-      </router-link>
 
       <p class="tips">Have no account?
         <el-button type="info" size="mini" style="background-color: #25c4b0" @click="goTo()">Register</el-button>
@@ -76,23 +75,29 @@ export default {
     },
 
     handleLogin() {
-      this.$https.post('/api/login', {email: this.loginForm.email, password: this.loginForm.password}).then(res => {
+      this.$https.post('/user/login',{email:this.loginForm.email,password:this.loginForm.password}).then(res => {
+        console.log(res)
         if (res.status === 200) {
           this.$message({
             showClose: true,
             message: 'Login succeeded, skipping to the home page...',
             type: 'success'
           })
+          //保存用户id
+          let data = res.data;
+          localStorage.setItem('userId',res.data);
           setTimeout(() => {
             this.$router.push('/')
           }, 2000)
-        } else if(res.status === 400){
+          //取值
+          // localStorage.getItem(userId)
+        }else if(res.status === 400){
           this.$message({
             showClose: true,
-            message: 'Incorrect password. Please try again',
+            message: 'Failed. Please try again',
             type: 'error'
           })
-        }else{
+        }else if(res.status === 416){
           this.$message({
             showClose: true,
             message: 'You are a new user.Go and register first',
@@ -104,29 +109,8 @@ export default {
   }
 }
 
-// handleLogin() {
-//   this.$refs.loginForm.validate((valid) => {
-//     if (valid) {
-//       const loginFormData=this.loginForm;
-//       login(loginFormData)
-//         .then((res) => {
-//           if (res.msg) {
-//             this.loading = false;
-//             this.$router.push('/home');
-//           } else {
-//             this.$message.error(res.msg);
-//             this.loading = false;
-//           }
-//         })
-//         .catch((e) => {
-//           console.log(e);
-//           this.loading = false;
-//         });
-//     }
-//   });
-// }
-//   }
-// }
+
+
 </script>
 
 <style scoped>
@@ -137,7 +121,7 @@ export default {
   height: 110vh;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url("../assets/new.jpg")
+  background-image: url(../assets/new.jpg);
 }
 
 .ms-title {
