@@ -66,9 +66,9 @@
 <script>
 	export default {
 		mounted(){
-			this.$axios.get('/goods.json').then(res=>{
-				console.log(res.data);
-			})
+			// this.$axios.get('/goods.json').then(res=>{
+			// 	console.log(res.data);
+			// })
 		}
     
 	}
@@ -85,8 +85,8 @@
   
 }
     .home-container{
-        position:relative;
-        height:100%;
+        //position:absolute;
+        height:100vh;
     }
     .el-header {
       //  margin:-8px;

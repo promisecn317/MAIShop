@@ -7,10 +7,9 @@ import com.maishopidea.maishopidea.service.CartItemService;
 import com.maishopidea.maishopidea.service.CartService;
 import com.maishopidea.maishopidea.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,17 +24,15 @@ public class CartController {
     @Autowired
     CartItemService cartItemService;
 
-    @PostMapping(value = "add")
-    public void addItem(@RequestParam("ProductId") int productId,@RequestParam("CartId") int cartId){
+    @GetMapping(value = "add")
+    public void addItem(@RequestParam("productId") int productId,@RequestParam("userId") int cartId){
         Product product= productService.getProduct(productId);
 
         Cart cart=cartService.findCart(cartId);
         List<CartItem> cartItemList=cart.getItems();
 
         if (cartItemList.size()==0){
-
             cartItemList.add(new CartItem(productId,product.getProductName(), 1,product.getProductPrice(),product.getProductPrice(),product.getProductImage(),cart));
-
         }
         else {
             for (int i = 0; i < cartItemList.size(); i++) {
@@ -51,13 +48,13 @@ public class CartController {
                 }
             }
         }
-
-
         cart.setItems(cartItemList);
         cartService.saveCart(cart);
 
 
     }
+
+
 
     @PostMapping(value = "delete")
     public void deleteItem(@RequestParam("ProductId") int productId,@RequestParam("CartId") int cartId){
@@ -146,9 +143,9 @@ public class CartController {
     }
 
     @GetMapping(value = "show")
-    public List<CartItem> getCart(@RequestParam("CartId") int cartId){
+    public ResponseEntity getCart(@RequestParam("userId") int cartId){
         Cart cart=cartService.findCart(cartId);
-        return cart.getItems();
+        return ResponseEntity.status(HttpStatus.OK).body(cart.getItems());
     }
 }
 

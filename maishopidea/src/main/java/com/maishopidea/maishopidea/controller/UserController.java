@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping(value = "login")
     @ResponseBody
-    public ResponseEntity<User> userLogin(@RequestBody User user
+    public ResponseEntity userLogin(@RequestBody User user
     ) throws Exception {
         String inputUserEmail=user.getEmail();
         String inputpassword=user.getPassword();
@@ -42,13 +42,14 @@ public class UserController {
         try {
             User user1 = userService.findByEmail(inputUserEmail);
             String userpsw = user1.getPassword();
+            int userId=user1.getUserId();
             Map<String, String> result = new HashMap<>();
             if (!userpsw.equals(inputpassword.trim())) {
                 result.put("flag", "false");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             } else {
                 result.put("flag", "true");
-                return ResponseEntity.status(HttpStatus.OK).body(null);
+                return ResponseEntity.status(HttpStatus.OK).body(userId);
             }
         } catch (NullPointerException e) {
             Map<String, String> result = new HashMap<>();
@@ -56,6 +57,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body(null);
         }
     }
+
 
     @PostMapping(value = "userRegister/{code}")
     public ResponseEntity userRegister (@RequestBody User user, @PathVariable(name = "code") String inputCode){
