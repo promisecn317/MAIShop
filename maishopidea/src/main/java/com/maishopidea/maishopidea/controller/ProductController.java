@@ -43,7 +43,7 @@ public class ProductController {
         product1.setProductDescription(product.getProductDescription());
         product1.setCreatedDate(product.getCreatedDate());
         product1.setProductPrice(product.getProductPrice());
-        product1.setProductQty(product.getProductQty());
+        product1.setProductQty(1);
         product1.setSellable(true);
         if(productImage==null)
         {
@@ -61,7 +61,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "newProductInformation")
-    public ResponseEntity<Product> newInformation(@RequestPart("product") Product product, @RequestParam(name="productImage",required = false)
+    public ResponseEntity<Product> newInformation(@RequestPart Product product, @RequestParam(name="productImage",required = false)
             MultipartFile productImage) throws IOException {
         Product product1=new Product();
         product1.setProductId(product.getProductId());

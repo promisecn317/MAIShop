@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: 'App',
+  // name: 'App',
   data() {
     return {
       dialogImageUrl: "",
@@ -94,15 +94,12 @@ export default {
   methods: {
     onSubmit() {
       console.log("submit!");
-      let _this = this;
-      this.$refs.upload.submit();
-
-      this.param.append("productName", _this.form.title);
-      this.param.append("productPrice", _this.form.price);
-      this.param.append("productDescription", _this.form.desc);
-      //this.param.append("param", _this.form.param);
+      let formData = new FormData()
+      formData.append("productName", this.form.title);
+      formData.append("productPrice", this.form.price);
+      formData.append("productDescription", this.form.desc);
       console.log(this.param);
-      this.$axios.post("http://localhost:8080/productInformation", this.param).then(res => {
+      this.$axios.post("http://localhost:8088/productInformation", {product:formData}).then(res => {
         this.$message({
           showClose: true,
           message: " post successfully！",
