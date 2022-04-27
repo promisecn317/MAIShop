@@ -16,9 +16,8 @@ public class Product {
     private double productPrice;
     private int productQty;
     private boolean sellable;
-    @ManyToOne
-    @JoinColumn(name = "seller")
-    private User user;
+    private int userId;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     //@Column(name = "productImage", columnDefinition = "longblob", nullable = true)
@@ -75,5 +74,11 @@ public class Product {
         this.productDescription = productInformation;
     }
 
+    public int getUserId() {
+        return userId;
+    }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

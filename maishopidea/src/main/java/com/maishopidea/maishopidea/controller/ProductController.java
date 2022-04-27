@@ -1,6 +1,5 @@
 package com.maishopidea.maishopidea.controller;
 
-import com.maishopidea.maishopidea.common.Result;
 import com.maishopidea.maishopidea.entity.Product;
 import com.maishopidea.maishopidea.service.ProductService;
 import com.maishopidea.maishopidea.service.UserService;
@@ -11,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
-public class ProductContorller {
+public class ProductController {
     @Autowired
     private ProductService productService;
 
@@ -70,11 +70,20 @@ public class ProductContorller {
         productService.saveProduct(product);
     }
 
-    @PostMapping(value = "my_product")
-    public Result<List<Product>> myProductList(@RequestParam(name = "userEmail") String userEmail) throws Exception {
-        int userId = userService.findByEmail(userEmail).getUserId();
-        List<Product> sellerProducts = productService.getProductsByUserId(userId);
-        return Result.success(sellerProducts);
+    @GetMapping(value = "my_product")
+    public ResponseEntity myProductList(@RequestParam(name = "userEmail") String email) throws Exception {
+        int userId = Objects.requireNonNull(userService.findByEmail(email)).getUserId();
+        List<Product> sellerProducts = productService.getSellerProductsById(userId);
+        if (sellerProducts.size() == 0) {
+            return new ResponseEntity("Nothing.", HttpStatus.CONFLICT);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(sellerProducts);
+    }
+
+    @GetMapping(value = "product_shelve")
+    public ResponseEntity productShelve() {
+        List<Product> shelve = productService.getSellable();
+        return ResponseEntity.status(HttpStatus.OK).body(shelve);
     }
 
 }

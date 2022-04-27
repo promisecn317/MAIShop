@@ -1,12 +1,9 @@
 package com.maishopidea.maishopidea.service;
 
 import com.maishopidea.maishopidea.entity.Product;
-import com.maishopidea.maishopidea.entity.User;
 import com.maishopidea.maishopidea.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +29,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductsByUserId(int userId) {
-        return productRepo.findProductsByUser_userId(userId);
+    public List<Product> getSellerProductsById(int userId) {
+        return productRepo.findAllByUserId(userId);
     }
+
 }

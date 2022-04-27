@@ -15,19 +15,14 @@ public class User {
     private String email;
     private String password;
     private String userGender;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
-//    @Column(name = "userAvatar", columnDefinition = "longblob", nullable = true)
     private byte[] userAvatar;
-//    @ManyToMany(fetch=FetchType.EAGER) //EAGER means when access user, the following will be auto accessed
-//    @OneToMany(fetch=FetchType.LAZY,targetEntity = Product.class)
-//    @JoinColumn(name = "product", columnDefinition = "longblob")
-//    private List<Product> products;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
-    @OneToMany(mappedBy = "user")
-    private List<Product> sellerProducts;
 
     public User() {}
 
@@ -41,9 +36,7 @@ public class User {
         this.cart = cart;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public int getUserId() {return userId;}
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -95,13 +88,4 @@ public class User {
         this.userName = userName;
     }
 
-    public List<Product> getSellerProducts() {
-        return sellerProducts;
-    }
-
-    public void setSellerProducts(List<Product> sellerProducts) {
-        this.sellerProducts = sellerProducts;
-    }
-
 }
-

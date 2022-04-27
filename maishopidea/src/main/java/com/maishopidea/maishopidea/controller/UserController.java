@@ -32,9 +32,6 @@ public class UserController {
         this.verifyService = verifyService;
     }
 
-//    @RequestParam(name = "userEmail") String inputUserEmail,
-//    @RequestParam("userPassword") String inputpassword
-
     @PostMapping(value = "login")
     @ResponseBody
     public ResponseEntity<User> userLogin(@RequestBody User user
