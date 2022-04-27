@@ -31,7 +31,12 @@ public class CartController {
 
         Cart cart=cartService.findCart(cartId);
         List<CartItem> cartItemList=cart.getItems();
-        if (cartItemList.size()==0)cartItemList.add(new CartItem(productId,product.getProductName(), 1,product.getProductPrice(),product.getProductPrice(),product.getProductImage(),cart));
+
+        if (cartItemList.size()==0){
+
+            cartItemList.add(new CartItem(productId,product.getProductName(), 1,product.getProductPrice(),product.getProductPrice(),product.getProductImage(),cart));
+
+        }
         else {
             for (int i = 0; i < cartItemList.size(); i++) {
                 if (cartItemList.get(i).getProdId() == productId) {
@@ -48,7 +53,9 @@ public class CartController {
         }
 
 
-        cartItemService.saveCartItem(cartItemList);
+        cart.setItems(cartItemList);
+        cartService.saveCart(cart);
+
 
     }
 
@@ -60,8 +67,8 @@ public class CartController {
         for (int i = 0; i <size ; i++) {
             if (itemList.get(i).getProdId()==productId){
                 CartItem cartItem=itemList.get(i);
-                itemList.remove(cartItem);
                 cartItemService.deleteItem(cartItem);
+                itemList.remove(cartItem);
                 break;
             }
         }

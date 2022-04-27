@@ -53,8 +53,8 @@ public class ProductController {
         }
             User user = userService.findById(userId);
             //User user = product.getUser();//userService.findByUserId(userId);
-            List<Product> productList =user.getSellerProducts() ;//new ArrayList<>()
-            productList.add(product1);
+//            List<Product> productList =user.getSellerProducts() ;//new ArrayList<>()
+//            productList.add(product1);
             productService.saveProduct(product1);
 
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);

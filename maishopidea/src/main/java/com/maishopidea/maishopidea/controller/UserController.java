@@ -71,4 +71,12 @@ public class UserController {
         userService.saveUser(user);
         return new ResponseEntity("Register Success.", HttpStatus.OK);
     }
+    @PostMapping(value="users")
+    public int userRegister(@RequestBody User user){
+
+        List<CartItem> list = new ArrayList<>();
+        user.setCart(new Cart(list));
+
+        return userService.saveUser(user);
+    }
 }

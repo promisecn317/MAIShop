@@ -16,10 +16,10 @@ public class UserServiceImpl implements UserService {
         return userRepo.findByEmail(Email);
     }
 
-    @Override
-    public User findByUserId(String userId) {
-        return userRepo.findByUserId(userId);
-    }
+//    @Override
+//    public User findByUserId(String userId) {
+//        return userRepo.findByUserId(userId);
+//    }
 
     @Override
     public User getUser(String Email) {
