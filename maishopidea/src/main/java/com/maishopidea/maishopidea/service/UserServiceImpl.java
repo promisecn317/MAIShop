@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByPassword(String Password) {
-        return userRepo.findByPassword(Password);
+    public User findByUserId(String userId) {
+        return userRepo.findByUserId(userId);
     }
 
     @Override
@@ -31,6 +31,13 @@ public class UserServiceImpl implements UserService {
     public int saveUser(User user) {
         return userRepo.save(user).getUserId();//命名很重要
     }
+
+    @Override
+    public User findById(int userId) {
+        Optional<User> user = userRepo.findById(userId);
+        return user.orElse(null);
+    }
+
 
 //
 //    @Override
