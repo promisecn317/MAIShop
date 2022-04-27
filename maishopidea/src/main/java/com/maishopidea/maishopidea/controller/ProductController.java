@@ -32,31 +32,8 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value = "saveProductInformation")
-    public ResponseEntity<Product> saveProductInformation(@RequestPart("product") Product product, @RequestParam(name = "userId") int userId,@RequestParam(name="productImage",required = false)
-            MultipartFile productImage) throws Exception {
-        Product product1=new Product();
-        product1.setProductId(product.getProductId());
-        product1.setProductName(product.getProductName());
-        product1.setProductDescription(product.getProductDescription());
-        product1.setCreatedDate(product.getCreatedDate());
-        product1.setProductPrice(product.getProductPrice());
-        product1.setProductQty(product.getProductQty());
-        product1.setSellable(true);
-        product1.setUserId(userId);
-        if(productImage==null)
-        {
-            product1.setProductImage(null);
-        }else {
-            product1.setProductImage(productImage.getBytes());//.getBytes()
-        }
-
-        productService.saveProduct(product1);
-        return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
-    }
-
-    @PostMapping(value = "newProductInformation")
-    public ResponseEntity<Product> newInformation(@RequestPart("product") Product product, @RequestParam(name="productImage",required = false)
+    @PostMapping(value = "newProductInformation")//, @RequestParam(name = "userId") int userId   ("product")
+    public ResponseEntity<Product> saveProductInformation(@RequestPart Product product,@RequestParam(name="productImage",required = false)
             MultipartFile productImage) throws IOException {
         Product product1=new Product();
         product1.setProductId(product.getProductId());
@@ -66,15 +43,18 @@ public class ProductController {
         product1.setProductPrice(product.getProductPrice());
         product1.setProductQty(product.getProductQty());
         product1.setSellable(true);
+        product1.setUserId(product.getUserId());
         if(productImage==null)
         {
             product1.setProductImage(null);
         }else {
             product1.setProductImage(productImage.getBytes());//.getBytes()
         }
+
         productService.saveProduct(product1);
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
+
 
     @PostMapping(value = "updateProductInformation")
     public void updateProductInformation(@RequestPart("prod") Product prod, @RequestParam(name="productImage",required=false) MultipartFile productImage) throws IOException {
@@ -85,7 +65,6 @@ public class ProductController {
         product.setSellable(prod.isSellable());
         product.setProductDescription(prod.getProductDescription());
         product.setCreatedDate(prod.getCreatedDate());
-        
         if (productImage==null)product.setProductImage(null);
         else product.setProductImage(productImage.getBytes());
         productService.saveProduct(product);
