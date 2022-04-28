@@ -43,7 +43,6 @@ public class CartController {
                     break;
                 } else if (i == cartItemList.size() - 1) {
                     cartItemList.add(new CartItem(productId,product.getProductName(), 1, product.getProductPrice(), product.getProductPrice(), product.getProductImage(),cart));
-                    //加完size就变了
                     break;
                 }
             }

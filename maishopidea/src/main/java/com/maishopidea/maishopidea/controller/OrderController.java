@@ -24,12 +24,14 @@ public class OrderController {
     public ResponseEntity userOrder(@RequestParam(name = "userId") int userId, @RequestParam List<Integer> orderIdList ){
         Order newOrder = new Order();
         newOrder.setUserId(userId);
+        List<Product> itemList=newOrder.getOrderItems();
         for (int productId : orderIdList) {
             Product orderItem = productService.getProduct(productId);
             orderItem.setSellable(false);
             productService.saveProduct(orderItem);
-            newOrder.getOrderItems().add(orderItem);
+            itemList.add(orderItem);
         }
+        newOrder.setOrderItems(itemList);
         orderService.saveOrder(newOrder);
         return new ResponseEntity<>(HttpStatus.OK);
     }
