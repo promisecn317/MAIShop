@@ -56,7 +56,7 @@ public class CartController {
 
 
     @PostMapping(value = "delete")
-    public void deleteItem(@RequestParam("ProductId") int productId,@RequestParam("CartId") int cartId){
+    public void deleteItem(@RequestParam("productId") int productId,@RequestParam("userId") int cartId){
         Cart cart=cartService.findCart(cartId);
         List<CartItem> itemList=cart.getItems();
         int size=itemList.size();

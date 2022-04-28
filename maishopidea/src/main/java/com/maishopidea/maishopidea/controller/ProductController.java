@@ -63,19 +63,31 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
 
-    @PostMapping(value = "updateProductInformation")
-    public void updateProductInformation(@RequestPart("prod") Product prod, @RequestParam(name="productImage",required=false) MultipartFile productImage) throws IOException {
-        Product product=new Product();
-        product.setProductName(prod.getProductName());
-        product.setProductPrice(prod.getProductPrice());
-        product.setProductQty(prod.getProductQty());
-        product.setSellable(prod.isSellable());
-        product.setProductDescription(prod.getProductDescription());
-        product.setCreatedDate(prod.getCreatedDate());
-        
-        if (productImage==null)product.setProductImage(null);
-        else product.setProductImage(productImage.getBytes());
-        productService.saveProduct(product);
+    @PostMapping(value = "editProductImage")
+    public ResponseEntity editProductImage(@PathVariable("productId") int productId, @RequestParam(name="productImage",required = false)
+            MultipartFile productImage)throws IOException{
+        Product product1=productService.getProduct(productId);
+
+        if(productImage==null)
+        {
+            product1.setProductImage(null);
+        }else {
+            product1.setProductImage(productImage.getBytes());//.getBytes()
+        }
+        productService.saveProduct(product1);
+        return ResponseEntity.ok().body(product1);
+    }
+
+    @PostMapping(value = "editProductInformation")
+    public ResponseEntity<Product> editProductInformation(@RequestBody Product product)  {
+        Product product1=productService.getProduct(product.getProductId());
+
+        product1.setProductName(product.getProductName());
+        product1.setProductDescription(product.getProductDescription());
+        product1.setProductPrice(product.getProductPrice());
+
+        productService.saveProduct(product1);
+        return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
 
     @GetMapping(value = "my_product")
