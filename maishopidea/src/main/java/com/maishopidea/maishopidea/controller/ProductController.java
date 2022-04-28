@@ -44,6 +44,7 @@ public class ProductController {
         }else {
             product1.setProductImage(productImage.getBytes());//.getBytes()
         }
+        productService.saveProduct(product1);
         return ResponseEntity.ok().body(product1);
     }
     @PostMapping(value = "newProductInformation")
@@ -56,7 +57,7 @@ public class ProductController {
         product1.setProductPrice(product.getProductPrice());
         product1.setProductQty(1);
         product1.setSellable(true);
-
+        product1.setUserId(product.getUserId());
         productService.saveProduct(product1);
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
