@@ -20,7 +20,7 @@ public class Product {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    //@Column(name = "productImage", columnDefinition = "longblob", nullable = true)
+    @Column(columnDefinition = "longblob")
     private byte[] productImage;
 
     //Constructor method for new

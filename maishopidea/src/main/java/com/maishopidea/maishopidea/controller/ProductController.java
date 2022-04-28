@@ -34,9 +34,20 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
+    @PostMapping(value = "newProductImage")
+    public ResponseEntity newProductImage( @RequestParam(name="productImage",required = false)
+                                                        MultipartFile productImage)throws IOException{
+        Product product1=new Product();
+        if(productImage==null)
+        {
+            product1.setProductImage(null);
+        }else {
+            product1.setProductImage(productImage.getBytes());//.getBytes()
+        }
+        return ResponseEntity.ok().body(product1);
+    }
     @PostMapping(value = "newProductInformation")
-    public ResponseEntity<Product> newInformation(@RequestPart Product product, @RequestParam(name="productImage",required = false)
-            MultipartFile productImage) throws IOException {
+    public ResponseEntity<Product> newInformation(@RequestBody Product product)  {
         Product product1=new Product();
         product1.setProductId(product.getProductId());
         product1.setProductName(product.getProductName());
@@ -45,12 +56,7 @@ public class ProductController {
         product1.setProductPrice(product.getProductPrice());
         product1.setProductQty(1);
         product1.setSellable(true);
-        if(productImage==null)
-        {
-            product1.setProductImage(null);
-        }else {
-            product1.setProductImage(productImage.getBytes());//.getBytes()
-        }
+
         productService.saveProduct(product1);
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product1);
     }
