@@ -34,10 +34,11 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value = "newProductImage")
-    public ResponseEntity newProductImage( @RequestParam(name="productImage",required = false)
+    @PostMapping(value = "newProductImage/{productId}")
+    public ResponseEntity newProductImage(@PathVariable("productId") int productId, @RequestParam(name="productImage",required = false)
                                                         MultipartFile productImage)throws IOException{
-        Product product1=new Product();
+        Product product1=productService.getProduct(productId);
+
         if(productImage==null)
         {
             product1.setProductImage(null);
