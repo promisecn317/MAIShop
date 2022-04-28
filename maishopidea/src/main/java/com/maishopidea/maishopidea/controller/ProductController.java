@@ -34,20 +34,26 @@ public class ProductController {
         return product==null ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null):ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value = "newProductImage/{productId}")
-    public ResponseEntity newProductImage(@PathVariable("productId") int productId, @RequestParam(name="productImage",required = false)
-                                                        MultipartFile productImage)throws IOException{
-        Product product1=productService.getProduct(productId);
-
-        if(productImage==null)
-        {
-            product1.setProductImage(null);
-        }else {
-            product1.setProductImage(productImage.getBytes());//.getBytes()
-        }
+    @PostMapping(value = "newProductImage")
+    public ResponseEntity newProductImage(@RequestParam(name="productId") int productId, @RequestParam(name="productImage",required = false)
+            MultipartFile productImage)throws IOException{
+        productService.getProduct(productId).setProductImage(productImage.getBytes());//.getBytes()
+        //productService.saveProduct(productService.getProduct(productId));
+        Product product=productService.getProduct(productId);
+        Product product1=new Product();
+        product1.setProductId(productId);
+        product1.setProductName(product.getProductName());
+        product1.setProductDescription(product.getProductDescription());
+        product1.setProductImage(productImage.getBytes());
+        product1.setCreatedDate(product.getCreatedDate());
+        product1.setProductPrice(product.getProductPrice());
+        product1.setProductQty(1);
+        product1.setSellable(true);
+        //product1.setUserId(product.getUserId());
         productService.saveProduct(product1);
-        return ResponseEntity.ok().body(product1);
+        return ResponseEntity.ok().body(product1.getProductImage());
     }
+
     @PostMapping(value = "newProductInformation")
     public ResponseEntity<Product> newInformation(@RequestBody Product product)  {
         Product product1=new Product();
