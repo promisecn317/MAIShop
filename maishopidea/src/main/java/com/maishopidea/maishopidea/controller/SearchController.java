@@ -43,7 +43,6 @@ public class SearchController {
 
     //仅返回name   price  image
 
-    //test
 
     //分页查询
 

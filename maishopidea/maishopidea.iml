@@ -10,7 +10,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -30,9 +32,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.6.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.3.16" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.16" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.3.16" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.16" level="project" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-json:5.8.0.M4" level="project" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-core:5.8.0.M4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-devtools:2.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.6.4" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.16" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.6.4" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.24" level="project" />
     <orderEntry type="library" name="Maven: io.projectreactor:reactor-core:3.4.16" level="project" />
@@ -48,7 +56,6 @@
     <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.29" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.16" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.16" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:jakarta.mail:1.6.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
